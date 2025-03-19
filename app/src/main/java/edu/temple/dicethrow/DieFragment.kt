@@ -8,23 +8,23 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlin.random.Random
 
-class DieFragment : Fragment() {
+class DieFragment private constructor(private val sides: Int = 6) : Fragment() {
+
+    companion object {
+        fun newInstance(sides: Int = 6) = DieFragment(sides)
+    }
 
     val DIESIDE = "sidenumber"
-
     val PREVIOUS_ROLL = "previousroll"
 
     var currentRoll = 0
-
     lateinit var dieTextView: TextView
-
-    var dieSides: Int = 6
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             it.getInt(DIESIDE).run {
-                dieSides = this
+                currentRoll = this
             }
         }
     }
@@ -52,20 +52,11 @@ class DieFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
         outState.putInt(PREVIOUS_ROLL, currentRoll)
     }
 
     fun throwDie() {
-        currentRoll = (Random.nextInt(dieSides) + 1)
+        currentRoll = (Random.nextInt(sides) + 1)
         dieTextView.text = currentRoll.toString()
-    }
-
-    companion object {
-        fun newInstance(sides: Int) = DieFragment().apply {
-            arguments = Bundle().apply {
-                putInt(DIESIDE, sides)
-            }
-        }
     }
 }

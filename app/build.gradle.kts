@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "edu.temple.dicethrow"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "edu.temple.dicethrow"
